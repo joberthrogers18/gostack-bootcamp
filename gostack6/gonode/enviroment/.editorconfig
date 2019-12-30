@@ -1,0 +1,11 @@
+# Para que isso funcione é necessário ter o editconfig instalado no editor
+
+# significa que é o global, pode mais de um por pastas
+root = true
+
+[*]
+indent_style = space
+indent_size = 2
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
