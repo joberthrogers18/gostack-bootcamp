@@ -1,9 +1,10 @@
 const express = require('express')
 const nunjucks = require('nunjucks')
 const path = require('path')
+const routes = require('./routes')
 
 class App {
-  constuctor () {
+  constructor () {
     this.express = express()
     // variavel armazena e diz se o ambiente ta em produção ou não
     this.isDev = process.env.NODE_ENV !== 'production';
@@ -27,7 +28,9 @@ class App {
     this.express.set('view engine', 'njk')
   }
 
-  routes () {}
+  routes () {
+    this.express.use(routes)
+  }
 }
 
 module.exports = new App().express
