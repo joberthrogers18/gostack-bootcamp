@@ -3,6 +3,7 @@ const nunjucks = require('nunjucks')
 const session = require('express-session')
 const FileStore = require('session-file-store')(session)
 const path = require('path')
+const flash = require('connect-flash')
 const routes = require('./routes')
 
 class App {
@@ -18,6 +19,8 @@ class App {
 
   middlewares () {
     this.express.use(express.urlencoded({ extended: false }))
+    // middleware usado para listar mensagens na tela
+    this.express.use(flash())
     this.express.use(
       session({
         name: 'root',
