@@ -15,7 +15,7 @@ class DashboardController {
   async search (req, res) {
     const appointments = await Appointment.findAll({
       where: {
-        provider_id: req.params.provider,
+        provider_id: req.session.user.id,
         date: {
           [Op.between]: [
             moment()
@@ -31,6 +31,10 @@ class DashboardController {
 
     let scheduleAux = []
 
+    if (appointments.length === 0) {
+      return res.json({ schedules: scheduleAux })
+    }
+
     await appointments.map(async app => {
       const user = await User.findByPk(app.user_id)
       const date = moment(app.date).format('HH:mm')
@@ -42,7 +46,7 @@ class DashboardController {
       })
 
       if (scheduleAux.length === appointments.length) {
-        return res.json(scheduleAux)
+        return res.json({ schedules: scheduleAux })
       }
     })
 

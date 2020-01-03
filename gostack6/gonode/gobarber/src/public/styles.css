@@ -327,3 +327,8 @@ ul.providers {
   font-size: 16px !important;
   margin: 0 !important;
 }
+
+.warning-empyt {
+  text-align: center;
+  margin-bottom: 40px;
+}

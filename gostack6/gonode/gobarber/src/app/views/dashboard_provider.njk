@@ -36,25 +36,32 @@
           if (xhr.readyState === 4 && xhr.status === 200) {
               var json = JSON.parse(xhr.responseText);
               var div_apps = document.getElementById('cards-app');
-              console.log(div_apps)
-              console.log(json)
-              json.map(function(app) {
-                console.log(app)
-                const div_aux = document.createElement('div')
 
-                div_aux.innerHTML = `
-                  <div class="client-card">
-                    <img src="/files/${app.user_avatar}" class="img-client" />
-                    <div class="client-info">
-                      <strong> Cliente: </strong>
-                      <p>${ app.user_name }</p>
-                      <strong> Horário: </strong>
-                      <p class="time-sche">${ app.date }</p>
-                    </div>
-                  </div>`
+              if(json.schedules.length === 0 || json.schedules === [] || json.schedules === undefined){
+                var h1 = document.createElement('h1')
+                h1.innerHTML = "Não há compromissos marcado hoje";
+                h1.classList.add('warning-empyt')
+                div_apps.appendChild(h1)
+              } else {
+                json.schedules.map(function(app) {
+                  console.log(app)
+                  const div_aux = document.createElement('div')
 
-               div_apps.appendChild(div_aux)
-              })
+                  div_aux.innerHTML = `
+                    <div class="client-card">
+                      <img src="/files/${app.user_avatar}" class="img-client" />
+                      <div class="client-info">
+                        <strong> Cliente: </strong>
+                        <p>${ app.user_name }</p>
+                        <strong> Horário: </strong>
+                        <p class="time-sche">${ app.date }</p>
+                      </div>
+                    </div>`
+
+                div_apps.appendChild(div_aux)
+                })
+              }
+
 
           }
       };
