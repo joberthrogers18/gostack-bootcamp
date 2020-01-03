@@ -34,6 +34,7 @@ routes.get('/app/dashboard', DashboardController.index)
 routes.get('/app/appointments/new/:provider_id', AppointmentsController.create)
 routes.post('/app/appointments/new/:provider_id', AppointmentsController.store)
 routes.get('/app/available/:provider', AvailableController.index)
+routes.get('/app/dashboard-provider/:provider', DashboardController.search)
 
 routes.get('/', guestMiddleware, SessionController.create)
 routes.post('/signin', SessionController.store)

@@ -7,8 +7,59 @@
     <strong>Olá {{ user.name }}</strong>
     <p>Veja abaixo todo os seus horários marcados para hoje</p>
 
+    <div id="cards-app"></div>
 
+    {# {% for schedule in schedules %}
+      <div class="client-card">
+        <img src="/files/{{ schedule.user_avatar }}" class="img-client" />
+        <div class="client-info">
+          <strong> Cliente: </strong>
+          <p>{{ schedule.user_name }}</p>
+          <strong> Horário: </strong>
+          <p class="time-sche">{{ schedule.date }}</p>
+        </div>
+      </div>
+    {% endfor %} #}
 
     <a href="/app/logout" class="logout">Sair</a>
+    <script type="text/javascript">
+      {# console.log('passou')
+      fetch('/app/dashboard-provider/{{ user.id }}').then(result => {
+        console.log(result.date)
+      }) #}
+
+      var xhr = new XMLHttpRequest();
+      var url = "http://localhost:3333/app/dashboard-provider/14";
+      xhr.open("GET", url, true);
+      xhr.setRequestHeader("Content-Type", "application/json");
+      xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+              var json = JSON.parse(xhr.responseText);
+              var div_apps = document.getElementById('cards-app');
+              console.log(div_apps)
+              console.log(json)
+              json.map(function(app) {
+                console.log(app)
+                const div_aux = document.createElement('div')
+
+                div_aux.innerHTML = `
+                  <div class="client-card">
+                    <img src="/files/${app.user_avatar}" class="img-client" />
+                    <div class="client-info">
+                      <strong> Cliente: </strong>
+                      <p>${ app.user_name }</p>
+                      <strong> Horário: </strong>
+                      <p class="time-sche">${ app.date }</p>
+                    </div>
+                  </div>`
+
+               div_apps.appendChild(div_aux)
+              })
+
+          }
+      };
+      xhr.send();
+
+    </script>
   </div>
 {% endblock %}

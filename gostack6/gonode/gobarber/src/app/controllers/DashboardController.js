@@ -8,34 +8,46 @@ class DashboardController {
       const providers = await User.findAll({ where: { provider: true } })
       return res.render('dashboard', { providers })
     } else {
-      const appointments = await Appointment.findAll({
-        where: {
-          provider_id: req.session.user.id,
-          date: {
-            [Op.between]: [
-              moment()
-                .startOf('day')
-                .format(),
-              moment()
-                .endOf('day')
-                .format()
-            ]
-          }
-        }
-      })
-
-      console.log(
-        moment()
-          .endOf('day')
-          .format()
-      )
-
-      appointments.map(app => {
-        console.log(app)
-      })
-
       return res.render('dashboard_provider')
     }
+  }
+
+  async search (req, res) {
+    const appointments = await Appointment.findAll({
+      where: {
+        provider_id: req.params.provider,
+        date: {
+          [Op.between]: [
+            moment()
+              .startOf('day')
+              .format(),
+            moment()
+              .endOf('day')
+              .format()
+          ]
+        }
+      }
+    })
+
+    let scheduleAux = []
+
+    await appointments.map(async app => {
+      const user = await User.findByPk(app.user_id)
+      const date = moment(app.date).format('HH:mm')
+
+      scheduleAux.push({
+        user_name: user.name,
+        user_avatar: user.avatar,
+        date
+      })
+
+      if (scheduleAux.length === appointments.length) {
+        return res.json(scheduleAux)
+      }
+    })
+
+    // console.log('passou')
+    // return res.json({ schedules })
   }
 }
 

@@ -19,6 +19,7 @@ class App {
 
   middlewares () {
     this.express.use(express.urlencoded({ extended: false }))
+    this.express.use(express.json())
     // middleware usado para listar mensagens na tela
     this.express.use(flash())
     this.express.use(

@@ -290,3 +290,40 @@ ul.providers {
 .main-wrapper .content form button:hover {
   background: #634dac;
 }
+
+.client-card {
+  width: 100%;
+  height: 150px;
+  background-color: #eee;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 2px 2px 5px #bbb;
+}
+
+.client-card img {
+  width: 32%;
+  height: 70%;
+  border: none;
+  border-radius: 50%;
+}
+
+.client-card .client-info {
+  height: 70%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.client-info strong {
+  font-size: 14px;
+}
+
+.client-info p {
+  font-size: 16px !important;
+  margin: 0 !important;
+}
