@@ -1,0 +1,14 @@
+<h1>Provider</h1>
+
+{% extends "_layouts/default.njk"%}
+
+{% block body %}
+  <div class="content">
+    <strong>Olá {{ user.name }}</strong>
+    <p>Veja abaixo todo os seus horários marcados para hoje</p>
+
+
+
+    <a href="/app/logout" class="logout">Sair</a>
+  </div>
+{% endblock %}

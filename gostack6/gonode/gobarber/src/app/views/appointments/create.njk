@@ -26,6 +26,7 @@
       dateFormat: 'd/m/Y',
       onChange: function(date){
         // chamando a rota passando o query param com o timestamp da data escolhida
+        ///console.log(date[0].toISOString())
         fetch(`/app/available/{{ provider.id }}?date=${date[0].getTime()}`).then(function(response) {
           response.text().then(function(html){
             document.getElementById('hours').innerHTML = html

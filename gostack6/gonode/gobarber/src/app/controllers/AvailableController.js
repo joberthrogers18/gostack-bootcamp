@@ -4,7 +4,10 @@ const { Appointment } = require('../models')
 
 class AvailableController {
   async index (req, res) {
-    const date = moment(parseInt(req.query.date))
+    const date = moment.utc(parseInt(req.query.date))
+
+    console.log(date.date())
+    console.log(date.startOf('day').format())
 
     const appointments = await Appointment.findAll({
       where: {
@@ -32,11 +35,14 @@ class AvailableController {
       '18:00'
     ]
 
+    appointments.map(a => console.log(a.date))
+
     const available = schedule.map(time => {
       const [hour, minute] = time.split(':')
 
       // colocar no formato "2019-10-10 15:00:00"
-      const value = date
+      const value = moment(parseInt(req.query.date))
+        .add(1, 'day')
         .hour(hour)
         .minute(minute)
         .second(0)
@@ -45,7 +51,7 @@ class AvailableController {
         time,
         value: value.format(),
         available:
-          value.isAfter(moment()) &&
+          value.isAfter(moment(), 'hour') &&
           !appointments.find(a => moment(a.date).format('HH:mm') === time)
       }
     })
