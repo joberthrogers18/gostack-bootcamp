@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const mongoosePaginate = require('mongoose-paginate');
 
 const { Schema, model } = mongoose;
 
@@ -25,5 +26,8 @@ const AdSchema = new Schema({
     default: Date.now,
   },
 });
+
+// paginar os vários anuncios
+AdSchema.plugin(mongoosePaginate);
 
 module.exports = model('Ad', AdSchema);
