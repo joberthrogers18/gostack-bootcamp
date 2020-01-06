@@ -10,11 +10,13 @@ class PurchaseController {
     // usuario logado
     const user = await User.findById(req.userId);
 
+    // "context" são as varíaveis que serão usadas pelo template do email
     await Mail.sendMail({
       from: '"Joberth Rogers" <joberth.rogers18@gmail.com>',
       to: purchaseAd.author.email,
       subject: `Solicitação de compra: ${purchaseAd.title}`,
-      html: `<p>Teste: ${content}</p>`,
+      template: 'purchase',
+      context: { user, content, ad: purchaseAd },
     });
 
     return res.send();
