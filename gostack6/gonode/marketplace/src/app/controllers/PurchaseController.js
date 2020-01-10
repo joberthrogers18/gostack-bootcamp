@@ -1,23 +1,25 @@
 const Ad = require('../models/Ad');
 const User = require('../models/User');
-const Mail = require('../services/Mail');
+const Queue = require('../services/Queue');
+const PurchaseMail = require('../jobs/PurchaseEmail');
 
 class PurchaseController {
   async store(req, res) {
-    const { ad, content } = req.body;
+    const {
+      ad,
+      content,
+    } = req.body;
 
     const purchaseAd = await Ad.findById(ad).populate('author');
     // usuario logado
     const user = await User.findById(req.userId);
 
     // "context" são as varíaveis que serão usadas pelo template do email
-    await Mail.sendMail({
-      from: '"Joberth Rogers" <joberth.rogers18@gmail.com>',
-      to: purchaseAd.author.email,
-      subject: `Solicitação de compra: ${purchaseAd.title}`,
-      template: 'purchase',
-      context: { user, content, ad: purchaseAd },
-    });
+    Queue.create(PurchaseMail.key, {
+      ad: purchaseAd,
+      user,
+      content,
+    }).save();
 
     return res.send();
   }
