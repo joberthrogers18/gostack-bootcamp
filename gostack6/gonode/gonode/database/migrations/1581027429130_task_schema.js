@@ -23,6 +23,13 @@ class TaskSchema extends Schema {
         .onUpdate('CASCADE')
         .onDelete('SET NULL')
       table
+        .integer('file_id')
+        .unsigned()
+        .references('id')
+        .inTable('files')
+        .onUpdate('CASCADE')
+        .onDelete('SET NULL')
+      table
         .string('title')
         .notNullable()
       table
@@ -34,7 +41,7 @@ class TaskSchema extends Schema {
   }
 
   down () {
-    this.drop('tasks')
+    this.dropIfExists('tasks')
   }
 }
 
