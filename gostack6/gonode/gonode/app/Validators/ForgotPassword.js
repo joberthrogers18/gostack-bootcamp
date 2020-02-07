@@ -1,5 +1,7 @@
 'use strict'
 
+const Antl = use('Antl')
+
 class ForgotPassword {
   // Se achar um erro continuar e não parar no primeiro
   get validateAll () {
@@ -11,6 +13,10 @@ class ForgotPassword {
       email: 'required|email',
       redirect_url: 'required|url'
     }
+  }
+
+  get messages () {
+    return Antl.list('validation')
   }
 }
 
