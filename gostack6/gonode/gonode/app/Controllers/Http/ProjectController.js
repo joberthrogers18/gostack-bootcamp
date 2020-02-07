@@ -13,8 +13,13 @@ class ProjectController {
    * @param {View} ctx.view
    */
   async index ({ request, response, view }) {
+    // retorna os query params
+    const { page } = request.get('page')
+
     // Seria o populate do Mongo
-    const projects = await Project.query().with('user').fetch()
+    const projects = await Project.query()
+      .with('user')
+      .paginate(page)
 
     return projects
   }
